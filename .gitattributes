@@ -1,0 +1,7 @@
+# 源码仓库统一使用 LF 换行，避免 Windows 全局 core.autocrlf=true 在
+# checkout / stash / 切分支时静默把工作区文件改写成 CRLF。
+* text=auto eol=lf
+
+# 以下为二进制/生成物，禁止任何换行或编码转换。
+*.tgz binary
+*.zstd binary

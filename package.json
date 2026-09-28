@@ -1,0 +1,113 @@
+{
+  "name": "dsh-auto-handoff",
+  "version": "0.1.0",
+  "description": "DSH plugin: summarize a long session into a structured handoff brief and continue the work in a fresh session inside the same workspace. Stops at a step boundary instead of hard-interrupting running work.",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "src",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek",
+    "harness",
+    "cordis",
+    "session",
+    "handoff",
+    "compact",
+    "context"
+  ],
+  "author": "qingyou002",
+  "license": "MIT",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "npm run build:host && npm run build:client",
+    "build:host": "tsc -p tsconfig.build.json",
+    "build:client": "tsc -p tsconfig.client.json && node scripts/build-client.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "watch": "tsc -p tsconfig.json --watch",
+    "clean": "node -e \"for (const d of ['lib','.build']) require('node:fs').rmSync(d,{recursive:true,force:true})\"",
+    "package:install": "npm run build && node -e \"require('node:fs').mkdirSync('dist',{recursive:true})\" && npm pack --pack-destination dist"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-slots",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-api-session-controller"
+      ],
+      "platform": "web"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2",
+    "@deepseek-ai/dsh-agent": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/dsh-api-session-controller": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/dsh-commands": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/dsh-compaction": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/dsh-host-webserver": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/dsh-llm": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/dsh-permission-presets": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/dsh-plan-mode": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/dsh-session": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/dsh-session-projection": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/dsh-settings": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/dsh-token-meter": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/dsh-user-approval": ">=0.1.5-rc.1 <0.1.6-0 || >=0.1.6-rc.1 <0.1.7-0 || >=0.1.7-rc.1 <0.2.0-0",
+    "@deepseek-ai/schemastery": "^3.18.1"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-api-session-controller": { "optional": true },
+    "@deepseek-ai/dsh-compaction": { "optional": true },
+    "@deepseek-ai/dsh-host-webserver": { "optional": true },
+    "@deepseek-ai/dsh-permission-presets": { "optional": true },
+    "@deepseek-ai/dsh-plan-mode": { "optional": true },
+    "@deepseek-ai/dsh-session-projection": { "optional": true },
+    "@deepseek-ai/dsh-settings": { "optional": true },
+    "@deepseek-ai/dsh-token-meter": { "optional": true },
+    "@deepseek-ai/dsh-user-approval": { "optional": true }
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/dsh-agent": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-api-session-controller": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-commands": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-compaction": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-host-webserver": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-llm": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-permission-presets": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-plan-mode": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-scope": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-session": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-session-projection": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-settings": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-token-meter": "0.1.5-rc.3",
+    "@deepseek-ai/dsh-user-approval": "0.1.5-rc.3",
+    "@deepseek-ai/schemastery": "3.18.2",
+    "@types/node": "^24.0.0",
+    "@types/react": "~18.3.1",
+    "react": "^18.3.1",
+    "typescript": "^5.6.0",
+    "vitest": "^4.0.0"
+  }
+}

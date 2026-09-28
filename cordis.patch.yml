@@ -1,0 +1,11 @@
+# dsh-auto-handoff bundle layer — registers the HOST half into a profile.
+#
+# The BROWSER half needs no row here: the client module loader auto-discovers
+# the bundle from package.json `exports["./client"]` + `dsh.client`, and
+# serves it from the composed client roster.
+#
+# `name` is a PACKAGE NAME (resolved through the profile's node_modules),
+# NOT a relative path.
+- insert:
+    - id: dsh-auto-handoff
+      name: dsh-auto-handoff
