@@ -33,6 +33,14 @@
   ],
   "author": "qingyou002",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qingyou002/dsh-auto-handoff.git"
+  },
+  "homepage": "https://github.com/qingyou002/dsh-auto-handoff#readme",
+  "bugs": {
+    "url": "https://github.com/qingyou002/dsh-auto-handoff/issues"
+  },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "build": "npm run build:host && npm run build:client",
@@ -42,6 +50,7 @@
     "test:watch": "vitest",
     "watch": "tsc -p tsconfig.json --watch",
     "clean": "node -e \"for (const d of ['lib','.build']) require('node:fs').rmSync(d,{recursive:true,force:true})\"",
+    "prepare": "npm run build",
     "package:install": "npm run build && node -e \"require('node:fs').mkdirSync('dist',{recursive:true})\" && npm pack --pack-destination dist"
   },
   "dsh": {
