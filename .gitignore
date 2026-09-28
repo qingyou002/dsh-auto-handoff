@@ -1,5 +1,11 @@
 node_modules/
-lib/
 .build/
 dist/
 *.tsbuildinfo
+
+# lib/ is committed on purpose (unlike a normal TS package).
+# A git-hosted install — `dsh plugin --profile <profile> add github:qingyou002/dsh-auto-handoff` —
+# must ship the prebuilt host half (lib/index.js) and browser half (lib/client.js),
+# because pnpm refuses to run a git dependency's `prepare` script unless the profile
+# allowlists that exact git spec under `allowBuilds`. Rebuild and commit lib/ with
+# every src/ change (`npm run build`).

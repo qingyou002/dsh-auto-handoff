@@ -50,7 +50,7 @@
     "test:watch": "vitest",
     "watch": "tsc -p tsconfig.json --watch",
     "clean": "node -e \"for (const d of ['lib','.build']) require('node:fs').rmSync(d,{recursive:true,force:true})\"",
-    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
     "package:install": "npm run build && node -e \"require('node:fs').mkdirSync('dist',{recursive:true})\" && npm pack --pack-destination dist"
   },
   "dsh": {

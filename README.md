@@ -35,14 +35,20 @@
 ## 2. 安装
 
 ```sh
+# 从 GitHub 直装（推荐）
+dsh plugin --profile <profile> add github:qingyou002/dsh-auto-handoff
+
+# 或从本地检出的源码安装
 dsh plugin --profile <profile> add "file:/path/to/dsh-auto-handoff"
 ```
 
 `package.json` 声明了 `dsh.bundle.patch`（`cordis.patch.yml`）与 `dsh.client`（`platform: "web"`），
-因此 Host 半与浏览器半都会自动挂载；浏览器半无需额外的 profile 行。
+因此 Host 半与浏览器半都会自动挂载；浏览器半无需额外的 profile 行。装完重启 dsh 才生效。
 
-从源码安装需要在 profile 里批准构建（`allowBuilds`），或先在本仓库执行一次 `npm run build`，
-让 `lib/` 随包一起发布。
+**`lib/` 是随仓库提交的预构建产物**（Host 半 + 浏览器半），所以 `github:` 直装开箱即用：
+pnpm 只会拒绝执行 git 依赖的 `prepare` 脚本，本包因此把构建挂在 `prepublishOnly` 上
+（只在整个 `npm publish` 时跑），git 安装不触发任何构建脚本，也就不需要在 profile 的
+`allowBuilds` 里加白名单。**改动 `src/` 后请务必 `npm run build` 并把 `lib/` 一起提交。**
 
 ---
 
